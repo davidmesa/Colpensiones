@@ -11,48 +11,75 @@ public class Servidor extends Thread {
 	//-----------------------------------------------------------------------
 	//								Atributos
 	//-----------------------------------------------------------------------
-	
+
 	/**
-	 * 
+	 * ID del servidor
+	 */
+	private int idServidor;
+
+	/**
+	 * Buffer, consume mensajes de este.
 	 */
 	private Buffer buffer;
-	
+
 	//-----------------------------------------------------------------------
 	//							   Constructor
 	//-----------------------------------------------------------------------
-	
-	public Servidor( Buffer nBuffer )
+
+	/**
+	 * Constructor del Servidor
+	 * @param nBuffer Buffer del cual se consumen mensajes
+	 */
+	public Servidor( int nID, Buffer nBuffer )
 	{
-		
+		idServidor = nID;
+		buffer = nBuffer;
 	}
-	
+
+	//-----------------------------------------------------------------------
+	//								Metodos
+	//-----------------------------------------------------------------------
+
+	/**
+	 * Metodo run del thread del servidor.
+	 * Encargado de consumir mensaje y retornar al buffer.
+	 */
+	@Override
+	public void run()
+	{
+		System.out.println(idServidor);
+	}
+
 	//-----------------------------------------------------------------------
 	//								  Main
 	//-----------------------------------------------------------------------
 
 	/**
-	 * Main clase, Priera en iniciar
+	 * Main clase, Primera en iniciar
 	 * @param args
 	 */
 	public static void main( String[] args )
 	{
-		Buffer buffer = new Buffer(20);
-
-		// Crea servidores
+		int capacidadBuffer = 20;
 
 		int cantServidores = 10;
+
+		int cantClientes = 30;
+
+		Buffer buffer = new Buffer(capacidadBuffer, cantClientes);
+
+		// Crea servidores
 
 		Servidor[] servidores = new Servidor[ cantServidores ];
 
 		for (int i = 0; i < cantServidores; i++) 
 		{
-			servidores[i] = new Servidor( buffer );
+			servidores[i] = new Servidor( i, buffer );
 			servidores[i].start();
 		}
 
 		//Crea Clientes
 
-		int cantClientes = 30;
 	}
 
 }

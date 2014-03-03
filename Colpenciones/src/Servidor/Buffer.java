@@ -1,6 +1,6 @@
 package Servidor;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import Cliente.Mensaje;
 
 /**
  * Clase Buffer
@@ -14,9 +14,12 @@ public class Buffer {
 	//-----------------------------------------------------------------------
 	
 	/**
-	 * Contiene la capacidad del buffer.
+	 * Contiene la cantidad de clientes
 	 */
-	private AtomicInteger capacidad;
+	private int cantClientes;
+	
+	private Cola cola;
+			
 
 	//-----------------------------------------------------------------------
 	//							   Constructor
@@ -26,13 +29,36 @@ public class Buffer {
 	 * Constructor del Buffer
 	 * @param nCapacidad la capacidad del buffer
 	 */
-	public Buffer ( int nCapacidad )
+	public Buffer ( int nCapacidad, int nCantClientes )
 	{
-		capacidad = new AtomicInteger(nCapacidad);
+		cantClientes = nCantClientes;
+		cola = new Cola(nCapacidad);
 	}
 
 	//-----------------------------------------------------------------------
 	//								Metodos
 	//-----------------------------------------------------------------------
+	
+	/**
+	 * Almacena un mensaje en la cola
+	 * @param nMensaje El mensaje que se quiere almacenar
+	 * @return True si se almaceno, False si no hay espacio
+	 */
+	public synchronized boolean almacenar( Mensaje nMensaje )
+	{
+		return cola.agregarMensaje(nMensaje);
+	}
+	
+	/**
+	 * Obtiene el mensaje de la cola
+	 * @return Mensaje de la cola, null en caso de estar vacia.
+	 */
+	public synchronized Mensaje obtener()
+	{
+		return cola.obtenerMensaje();
+	}
+	
+	
+	
 	
 }

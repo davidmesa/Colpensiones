@@ -1,5 +1,7 @@
 package Servidor;
 
+import Cliente.Cliente;
+
 /**
  * Clase servidor
  * @author davidmesa
@@ -79,7 +81,14 @@ public class Servidor extends Thread {
 		}
 
 		//Crea Clientes
-
+		
+		Cliente[] clientes = new Cliente[cantClientes];
+		for (int i= 0; i<clientes.length; i++)
+		{
+			clientes[i] = new Cliente(i, buffer);
+			clientes[i].start();
+		}
+		
 	}
 
 }

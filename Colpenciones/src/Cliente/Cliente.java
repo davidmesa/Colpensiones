@@ -36,21 +36,7 @@ public class Cliente extends Thread
 		return cedula;
 	}
 	
-	/**
-	 * Metodo del main de los threads
-	 * @param args
-	 */
-	public void main(String[] args)
-	{
-		int cantiClients = 30;
-		Cliente[] clientes = new Cliente[cantiClients];
-		for (int i= 0; i<clientes.length; i++)
-		{
-			clientes[i] = new Cliente(i, buffer);
-			clientes[i].start();
-		}
-	}
-	
+
 	/**
 	 * Metodo que realiza las operaciones de cada thread
 	 */

@@ -27,7 +27,7 @@ public class Buffer {
 	
 	/**
 	 * Constructor del Buffer
-	 * @param nCapacidad la capacidad del buffer
+	 	* @param nCapacidad la capacidad del buffer
 	 */
 	public Buffer ( int nCapacidad, int nCantClientes )
 	{

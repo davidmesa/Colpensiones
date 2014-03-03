@@ -58,6 +58,23 @@ public class Buffer {
 		return cola.obtenerMensaje();
 	}
 	
+	/**
+	 * 
+	 */
+	public synchronized void salirCliente()
+	{
+		cantClientes --;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean quedanClientes()
+	{
+		return cantClientes == 0;
+	}
+	
 	
 	
 	

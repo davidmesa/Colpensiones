@@ -1,6 +1,7 @@
 package Servidor;
 
 import Cliente.Cliente;
+import Cliente.Mensaje;
 
 /**
  * Clase servidor
@@ -50,6 +51,33 @@ public class Servidor extends Thread {
 	public void run()
 	{
 		System.out.println(idServidor);
+		outerloop:
+		while(true)
+		{
+			Mensaje mensajeActual = null;
+			while(mensajeActual == null)
+			{
+				if(buffer.quedanClientes())
+				{
+					break outerloop;
+				}
+				mensajeActual = buffer.obtener();
+			}
+			procesarMensaje(mensajeActual);
+			mensajeActual.despertar();
+		}
+	}
+	
+	/**
+	 * Procesa el mensaje enviado por el cliente
+	 * @param mensajeActual El mensaje a procesar
+	 * @return retorna el mensaje procesado
+	 */
+	public void procesarMensaje( Mensaje mensajeActual )
+	{
+		int dato = mensajeActual.darDato();
+		dato ++;
+		mensajeActual.ingresarDato(dato);
 	}
 
 	//-----------------------------------------------------------------------
@@ -64,9 +92,9 @@ public class Servidor extends Thread {
 	{
 		int capacidadBuffer = 20;
 
-		int cantServidores = 10;
+		int cantServidores = 4;
 
-		int cantClientes = 30;
+		int cantClientes = 10;
 
 		Buffer buffer = new Buffer(capacidadBuffer, cantClientes);
 

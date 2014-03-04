@@ -13,27 +13,30 @@ public class Cliente extends Thread
 {
 
 	
-	private static long cedula;
+	private int idCliente;
 	
 	private Buffer buffer;
+	
+	private int cantidadMensajes;
 	
 	
 	/**
 	 * Metodo constructor de la clase cliente
 	 */
-	public Cliente(long id, Buffer buff)
+	public Cliente(int id, Buffer buff)
 	{
-		cedula = id;
+		idCliente = id;
 		buffer = buff;
+		cantidadMensajes = (int) ( 100*Math.random() );
 	}
 	
 	/**
 	 * Metodo que retorna el identificador unico del cliente
 	 * @return un numero que identifica al cliente de todos los demas
 	 */
-	public long darId()
+	public int darId()
 	{
-		return cedula;
+		return idCliente;
 	}
 	
 
@@ -42,8 +45,14 @@ public class Cliente extends Thread
 	 */
 	public void run()
 	{
-		Mensaje mess = new Mensaje(this, buffer);
-		//TODO
+		for (int i = 0; i < 5; i++) {
+			int dato = (int) ( 100*Math.random() );
+			Mensaje mensajeActual = new Mensaje(this, buffer, dato);
+			System.out.println("Envia Mesaje:   id "+idCliente + " Mensaje no " + i);
+			mensajeActual.enviarMensaje();
+			System.out.println("Recibe mensaje: id "+idCliente + " Mensaje no " + i);
+		}
+		buffer.salirCliente();
 	}
 	
 }

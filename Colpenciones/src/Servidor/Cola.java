@@ -20,7 +20,7 @@ public class Cola {
 	 * Contiene los mensajes de la cola
 	 */
 	private Mensaje[] mensajes;
-
+	
 	/**
 	 * La capacidad de la cola
 	 */
@@ -40,7 +40,7 @@ public class Cola {
 	 * Cantidad de elementos en la cola
 	 */
 	private int cantidad;
-
+	
 	//-----------------------------------------------------------------------
 	//							   Constructor
 	//-----------------------------------------------------------------------
@@ -57,6 +57,7 @@ public class Cola {
 		ultimo = 0;
 		cantidad = 0;
 		mensajes = new Mensaje[capacidad];
+		
 	}
 
 	//-----------------------------------------------------------------------

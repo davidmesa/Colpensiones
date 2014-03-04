@@ -1,5 +1,7 @@
 package Cliente;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import Servidor.Buffer;
 
 /**
@@ -10,34 +12,71 @@ import Servidor.Buffer;
 public class Mensaje 
 {
 	private Cliente cliente;
-	
 	private Buffer buffer;
-	
+	private int dato;
+	private AtomicBoolean dormido;
+
 	/**
 	 * Metodo constructor de la clase
 	 * @param client el cliente que crea el mensaje
 	 */
-	public Mensaje(Cliente client, Buffer buff)
+	public Mensaje(Cliente client, Buffer nBuffer, int nDato)
 	{
 		cliente = client;
-		buffer = buff;
+		dato = nDato;
+		buffer = nBuffer;
+		dormido = new AtomicBoolean();
 	}
-	
+
 	/**
-	 * Metodo que retona el cliente que envio este mensaje
-	 * @return el cliente que envia el mensaje
+	 * Encargado de almacenar el mensaje y dormir al cliente mientras este es procesado
 	 */
-	public Cliente darCliente()
+	public void enviarMensaje()
 	{
-		return cliente;
+		while ( !buffer.almacenar(this) ) { }
+		dormido.set(true);;
+		synchronized (cliente) {
+			while( dormido.get() )
+			{
+				try { cliente.wait(); }
+				catch (InterruptedException e) { }
+			}
+		}
 	}
-	
+
 	/**
-	 * Metodo que simboliza el envio del mansaje al buffer
+	 * Se encarga de despertar al thread del cliente
 	 */
-	public void envio()
+	public void despertar( )
 	{
-		//TODO
+		synchronized (cliente) {
+			dormido.set(false);
+			cliente.notify();
+		}
+	}
+
+	/**
+	 * Devuelve el dato del mensaje
+	 * @return Dato del mensaje
+	 */
+	public int darDato()
+	{
+		return dato;
+	}
+
+	/**
+	 * Ingresa nuevo dato al mensaje
+	 * @param nDato Nuevo dato
+	 */
+	public void ingresarDato( int nDato )
+	{
+		dato = nDato;
 	}
 	
+	public int darIdCliente()
+	{
+		return cliente.darId();
+	}
+
+
 }

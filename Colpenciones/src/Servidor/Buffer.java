@@ -59,7 +59,7 @@ public class Buffer {
 	}
 	
 	/**
-	 * 
+	 * Indica que un cliente termino su trabajo y desea salir.
 	 */
 	public synchronized void salirCliente()
 	{
@@ -67,15 +67,11 @@ public class Buffer {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Indica si aun quedan clientes por atender
+	 * @return True si quedan clientes flase de lo contrario
 	 */
 	public boolean quedanClientes()
 	{
 		return cantClientes == 0;
 	}
-	
-	
-	
-	
 }

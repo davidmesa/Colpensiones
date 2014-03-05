@@ -1,20 +1,41 @@
 package Cliente;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import Servidor.Buffer;
 
 /**
- * 
+ * Clase Mensaje
  * @author miguelangelcaldasvillamizar
- *
+ * Encargada de depositar el mensaje en el buffer y contener su informacion
  */
 public class Mensaje 
 {
+	//-----------------------------------------------------------------------
+	//								Atributos
+	//-----------------------------------------------------------------------
+	
+	/**
+	 * El cliente creador del mensaje
+	 */
 	private Cliente cliente;
+	
+	/**
+	 * El buffer donde se almacena el mensaje
+	 */
 	private Buffer buffer;
+	
+	/**
+	 * El dato que contiene el mensaje
+	 */
 	private int dato;
-	private AtomicBoolean dormido;
+	
+	/**
+	 * Identifica si el mensaje esta dormido
+	 */
+	private boolean dormido;
+	
+	//-----------------------------------------------------------------------
+	//							   Constructor
+	//-----------------------------------------------------------------------
 
 	/**
 	 * Metodo constructor de la clase
@@ -25,34 +46,35 @@ public class Mensaje
 		cliente = client;
 		dato = nDato;
 		buffer = nBuffer;
-		dormido = new AtomicBoolean();
+		dormido = false;
 	}
+	
+	//-----------------------------------------------------------------------
+	//								Metodos
+	//-----------------------------------------------------------------------
 
 	/**
 	 * Encargado de almacenar el mensaje y dormir al cliente mientras este es procesado
 	 */
-	public void enviarMensaje()
+	public synchronized void enviarMensaje()
 	{
 		while ( !buffer.almacenar(this) ) { }
-		dormido.set(true);;
-		synchronized (cliente) {
-			while( dormido.get() )
-			{
-				try { cliente.wait(); }
-				catch (InterruptedException e) { }
-			}
+		dormido = true;
+
+		while( dormido )
+		{
+			try { wait(); }
+			catch (InterruptedException e) { }
 		}
 	}
 
 	/**
 	 * Se encarga de despertar al thread del cliente
 	 */
-	public void despertar( )
+	public synchronized void despertar( )
 	{
-		synchronized (cliente) {
-			dormido.set(false);
-			cliente.notify();
-		}
+		dormido = false;
+		notify();
 	}
 
 	/**
@@ -72,11 +94,13 @@ public class Mensaje
 	{
 		dato = nDato;
 	}
-	
+
+	/**
+	 * Retorna el id del cliente
+	 * @return Id del cliente
+	 */
 	public int darIdCliente()
 	{
 		return cliente.darId();
 	}
-
-
 }

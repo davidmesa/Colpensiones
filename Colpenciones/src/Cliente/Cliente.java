@@ -1,24 +1,37 @@
 package Cliente;
 
 import Servidor.Buffer;
-import Servidor.Servidor;
 
 
 /**
- * 
+ * Clase cliente
  * @author miguelangelcaldasvillamizar
- *
+ * Encargada de crear los mensajes y enviarlos
  */
 public class Cliente extends Thread
 {
+	//-----------------------------------------------------------------------
+	//								Atributos
+	//-----------------------------------------------------------------------
 
-	
+	/**
+	 * El id del cleinte, Para verificar el programa
+	 */
 	private int idCliente;
 	
+	/**
+	 * El buffer donde se almacenan los mensajes
+	 */
 	private Buffer buffer;
 	
+	/**
+	 * Cantidad de mensajes
+	 */
 	private int cantidadMensajes;
 	
+	//-----------------------------------------------------------------------
+	//							   Constructor
+	//-----------------------------------------------------------------------
 	
 	/**
 	 * Metodo constructor de la clase cliente
@@ -29,6 +42,10 @@ public class Cliente extends Thread
 		buffer = buff;
 		cantidadMensajes = (int) ( 100*Math.random() );
 	}
+	
+	//-----------------------------------------------------------------------
+	//								Metodos
+	//-----------------------------------------------------------------------
 	
 	/**
 	 * Metodo que retorna el identificador unico del cliente
@@ -45,12 +62,10 @@ public class Cliente extends Thread
 	 */
 	public void run()
 	{
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < cantidadMensajes; i++) {
 			int dato = (int) ( 100*Math.random() );
 			Mensaje mensajeActual = new Mensaje(this, buffer, dato);
-			System.out.println("Envia Mesaje:   id "+idCliente + " Mensaje no " + i);
 			mensajeActual.enviarMensaje();
-			System.out.println("Recibe mensaje: id "+idCliente + " Mensaje no " + i);
 		}
 		buffer.salirCliente();
 	}

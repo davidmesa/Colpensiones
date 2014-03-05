@@ -19,7 +19,7 @@ public class Buffer {
 	private int cantClientes;
 	
 	private Cola cola;
-			
+				
 
 	//-----------------------------------------------------------------------
 	//							   Constructor
@@ -72,6 +72,6 @@ public class Buffer {
 	 */
 	public boolean quedanClientes()
 	{
-		return cantClientes == 0;
+		return cantClientes != 0;
 	}
 }

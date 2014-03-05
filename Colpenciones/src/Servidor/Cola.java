@@ -1,7 +1,5 @@
 package Servidor;
 
-import java.util.concurrent.atomic.AtomicReferenceArray;
-
 import Cliente.Mensaje;
 
 /**
@@ -40,6 +38,7 @@ public class Cola {
 	 * Cantidad de elementos en la cola
 	 */
 	private int cantidad;
+	
 	
 	//-----------------------------------------------------------------------
 	//							   Constructor
@@ -104,15 +103,15 @@ public class Cola {
 	 * @return El primer mensaje de la cola o null en caso de que este vacia.
 	 */
 	public Mensaje obtenerMensaje()
-	{
+	{	
 		if(!estaVacia())
 		{
 			Mensaje respuesta = mensajes[primero];
+			mensajes[primero] = null;
 			primero = ( primero + 1 ) % capacidad;
 			cantidad --;
 			return respuesta;
 		}
 		return null;
 	}
-
 }

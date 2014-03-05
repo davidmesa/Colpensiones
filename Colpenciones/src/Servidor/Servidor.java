@@ -16,8 +16,9 @@ public class Servidor extends Thread {
 	//-----------------------------------------------------------------------
 
 	/**
-	 * ID del servidor
+	 * ID del servidor, Para verificar el programa
 	 */
+	@SuppressWarnings("unused")
 	private int idServidor;
 
 	/**
@@ -50,14 +51,13 @@ public class Servidor extends Thread {
 	@Override
 	public void run()
 	{
-		System.out.println(idServidor);
 		outerloop:
 		while(true)
 		{
 			Mensaje mensajeActual = null;
 			while(mensajeActual == null)
 			{
-				if(buffer.quedanClientes())
+				if(!buffer.quedanClientes())
 				{
 					break outerloop;
 				}
@@ -92,9 +92,9 @@ public class Servidor extends Thread {
 	{
 		int capacidadBuffer = 20;
 
-		int cantServidores = 4;
+		int cantServidores = 10;
 
-		int cantClientes = 10;
+		int cantClientes = (int) (Math.random()*100);
 
 		Buffer buffer = new Buffer(capacidadBuffer, cantClientes);
 

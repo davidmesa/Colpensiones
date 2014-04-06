@@ -47,9 +47,6 @@ a intentar. Una vez retirado el mensaje, genera una respuesta, y procede a despe
 encuentra a la espera en el mensaje. El servidor debe revisar si todavía hay clientes o no, en caso de que no 
 haya, debe terminar. 
 
-
-
-Note que el cliente no se comunica directamente con el buffer, sino con el mensaje, y es este último quien 
-se comunica con el buffer. 
+> Universidad de los Andes, InfraComp 201410
 
 

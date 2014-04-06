@@ -1,4 +1,6 @@
-# CASO I. 
+# CASO I.
+> Universidad de los Andes, InfraComp 201410
+
 ## Manejo de la concurrencia 
 Como se mencionó en el enunciado, la aplicación de Historia Laboral recibe múltiples consultas y debe tener 
 un buen tiempo de respuesta puesto que estos se refleja en una eficiente atención al público. 
@@ -46,7 +48,3 @@ Cada servidor, por su parte, está continuamente intentando retirar mensajes del
 a intentar. Una vez retirado el mensaje, genera una respuesta, y procede a despertar al cliente que se 
 encuentra a la espera en el mensaje. El servidor debe revisar si todavía hay clientes o no, en caso de que no 
 haya, debe terminar. 
-
-> Universidad de los Andes, InfraComp 201410
-
-
